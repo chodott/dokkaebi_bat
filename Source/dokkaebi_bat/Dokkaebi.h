@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputActionValue.h"
 #include "GameFramework/Character.h"
 #include "Dokkaebi.generated.h"
 
@@ -19,6 +20,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	//Movement
+	void Move(const FInputActionValue& value);
+	void Look(const FInputActionValue& value);
+	void Jump() override;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -27,9 +33,24 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
+	
+
+
 public:
+
+	//Component
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UCameraComponent* CameraComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class USpringArmComponent* SpringArmComponent;
+
+	//Input
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputMappingContext* DefaultMappingContext;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* MoveAction;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* JumpAction;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* LookAction;
 };
