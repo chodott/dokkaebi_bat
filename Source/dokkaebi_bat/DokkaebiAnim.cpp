@@ -24,3 +24,9 @@ void UDokkaebiAnim::NativeUpdateAnimation(float DeltaSeconds)
 	}
 }
 
+void UDokkaebiAnim::Attack()
+{
+	Montage_Play(BattleMontage, 1.0f);
+	//Montage_JumpToSection();
+}
+

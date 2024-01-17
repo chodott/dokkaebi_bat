@@ -24,6 +24,7 @@ protected:
 	void Move(const FInputActionValue& value);
 	void Look(const FInputActionValue& value);
 	void Jump() override;
+	void NormalAttack();
 
 public:	
 	// Called every frame
@@ -52,4 +53,6 @@ public:
 	class UInputAction* JumpAction;
 	UPROPERTY(EditAnywhere, Category = Input)
 	class UInputAction* LookAction;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* AttackAction;
 };

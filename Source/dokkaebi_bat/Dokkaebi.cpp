@@ -3,6 +3,7 @@
 
 #include "Dokkaebi.h"
 #include "DokkaebiController.h"
+#include "DokkaebiAnim.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -55,6 +56,7 @@ void ADokkaebi::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ADokkaebi::Jump);
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ADokkaebi::Move);
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ADokkaebi::Look);
+	EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ADokkaebi::NormalAttack);
 }
 
 void ADokkaebi::Move(const FInputActionValue& value)
@@ -71,6 +73,16 @@ void ADokkaebi::Move(const FInputActionValue& value)
 void ADokkaebi::Jump()
 {
 	Super::Jump();
+}
+
+void ADokkaebi::NormalAttack()
+{
+	UDokkaebiAnim* DokkaebiAnim = Cast<UDokkaebiAnim>(GetMesh()->GetAnimInstance());
+
+	if (DokkaebiAnim)
+	{
+		DokkaebiAnim->Attack();
+	}
 }
 
 float ADokkaebi::GetSpeed()

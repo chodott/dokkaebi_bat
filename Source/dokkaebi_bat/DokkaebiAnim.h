@@ -19,6 +19,13 @@ public:
 
 		virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
+		void Attack();
+
+public:
+
+		UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+		UAnimMontage* BattleMontage;
+
 
 		UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		float Speed;
