@@ -33,8 +33,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
-	
-
+	float GetSpeed();
 
 public:
 

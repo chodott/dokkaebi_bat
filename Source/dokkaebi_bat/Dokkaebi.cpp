@@ -5,6 +5,7 @@
 #include "DokkaebiController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 
@@ -70,6 +71,11 @@ void ADokkaebi::Move(const FInputActionValue& value)
 void ADokkaebi::Jump()
 {
 	Super::Jump();
+}
+
+float ADokkaebi::GetSpeed()
+{
+	return GetVelocity().Length();
 }
 
 void ADokkaebi::Look(const FInputActionValue& value)
