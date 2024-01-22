@@ -21,6 +21,9 @@ void UDokkaebiAnim::NativeUpdateAnimation(float DeltaSeconds)
 	{ 
 	Speed = Dokkaebi->GetSpeed();
 	Direction = CalculateDirection(Dokkaebi->GetVelocity(), Dokkaebi->GetActorRotation());
+
+	bFalling = Dokkaebi->GetIsFalling();
+	bRiding = Dokkaebi->bRiding;
 	}
 }
 

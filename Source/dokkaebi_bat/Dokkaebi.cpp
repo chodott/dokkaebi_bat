@@ -45,6 +45,23 @@ void ADokkaebi::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (bRiding)
+	{
+		FVector ForwardVector = GetActorForwardVector();
+		AddActorWorldOffset(ForwardVector * DeltaTime * RidingSpeed);
+		RidingRuntime += DeltaTime;
+
+		if (RidingRuntime > RidingDuration)
+		{
+			bRiding = false;
+			RidingRuntime = 0.f;
+			GetCharacterMovement()->GravityScale = 9.8f;
+		}
+
+	}
+
+	else IncreaseMp(DeltaTime);
+
 }
 
 // Called to bind functionality to input
@@ -57,6 +74,12 @@ void ADokkaebi::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ADokkaebi::Move);
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ADokkaebi::Look);
 	EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ADokkaebi::NormalAttack);
+}
+
+void ADokkaebi::IncreaseMp(float DeltaTime)
+{
+	if (Mp <= 100.f) Mp += DeltaTime * MpSpeed;
+	else Mp = 100.f;
 }
 
 void ADokkaebi::Move(const FInputActionValue& value)
@@ -73,6 +96,16 @@ void ADokkaebi::Move(const FInputActionValue& value)
 void ADokkaebi::Jump()
 {
 	Super::Jump();
+
+	if (bJumping)
+	{
+		bRiding = true;
+		UCharacterMovementComponent* Movement = GetCharacterMovement();
+		Movement->GravityScale = 0.f;
+		Movement->Velocity = FVector::Zero();
+		ReduceMp(10.f);
+	}
+	bJumping = true;
 }
 
 void ADokkaebi::NormalAttack()
@@ -88,6 +121,11 @@ void ADokkaebi::NormalAttack()
 float ADokkaebi::GetSpeed()
 {
 	return GetVelocity().Length();
+}
+
+bool ADokkaebi::GetIsFalling()
+{
+	return GetCharacterMovement()->IsFalling();
 }
 
 void ADokkaebi::Look(const FInputActionValue& value)

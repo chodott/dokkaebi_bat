@@ -33,8 +33,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	//status
+	void IncreaseMp(float DeltaTime);
+	inline void ReduceMp(float Amount) { if (Mp >= Amount) Mp -= Amount; };
+
 
 	float GetSpeed();
+	bool GetIsFalling();
 
 public:
 
@@ -55,4 +60,26 @@ public:
 	class UInputAction* LookAction;
 	UPROPERTY(EditAnywhere, Category = Input)
 	class UInputAction* AttackAction;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* RideAction;
+
+	//status
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float Hp{ 100.f };
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float Mp{ 100.f };
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	float MpSpeed{ 10.f };
+
+
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	float RidingSpeed{600.f};
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bJumping{ false };
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	float RidingDuration{ 3.f };
+	float RidingRuntime{ 0.f };
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bRiding{ false };
 };

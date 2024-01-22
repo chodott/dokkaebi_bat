@@ -33,5 +33,9 @@ public:
 		float Direction;
 		UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		bool bJumping;
+		UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		bool bFalling;
+		UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		bool bRiding;
 	
 };
