@@ -36,6 +36,6 @@ public:
 		UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		bool bFalling;
 		UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-		bool bRiding;
+		bool bFlying;
 	
 };

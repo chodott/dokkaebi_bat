@@ -24,6 +24,7 @@ protected:
 	void Move(const FInputActionValue& value);
 	void Look(const FInputActionValue& value);
 	void Jump() override;
+	void StopFlying();
 	void NormalAttack();
 
 public:	
@@ -78,8 +79,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool bJumping{ false };
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	float RidingDuration{ 3.f };
-	float RidingRuntime{ 0.f };
+	float FlyingDuration{ 3.f };
+	float FlyingRuntime{ 0.f };
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	bool bRiding{ false };
+	bool bFlying{ false };
 };

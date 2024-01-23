@@ -23,7 +23,7 @@ void UDokkaebiAnim::NativeUpdateAnimation(float DeltaSeconds)
 	Direction = CalculateDirection(Dokkaebi->GetVelocity(), Dokkaebi->GetActorRotation());
 
 	bFalling = Dokkaebi->GetIsFalling();
-	bRiding = Dokkaebi->bRiding;
+	bFlying = Dokkaebi->bFlying;
 	}
 }
 

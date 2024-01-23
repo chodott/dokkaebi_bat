@@ -45,17 +45,15 @@ void ADokkaebi::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (bRiding)
+	if (bFlying)
 	{
 		FVector ForwardVector = GetActorForwardVector();
 		AddActorWorldOffset(ForwardVector * DeltaTime * RidingSpeed);
-		RidingRuntime += DeltaTime;
+		FlyingRuntime += DeltaTime;
 
-		if (RidingRuntime > RidingDuration)
+		if (FlyingRuntime > FlyingDuration)
 		{
-			bRiding = false;
-			RidingRuntime = 0.f;
-			GetCharacterMovement()->GravityScale = 9.8f;
+			StopFlying();
 		}
 
 	}
@@ -74,6 +72,10 @@ void ADokkaebi::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ADokkaebi::Move);
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ADokkaebi::Look);
 	EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ADokkaebi::NormalAttack);
+
+	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Pressed, this, &ADokkaebi::Jump);
+	PlayerInputComponent->BindAction(TEXT("Jump"), IE_Released, this, &ADokkaebi::StopFlying);
+
 }
 
 void ADokkaebi::IncreaseMp(float DeltaTime)
@@ -97,15 +99,25 @@ void ADokkaebi::Jump()
 {
 	Super::Jump();
 
-	if (bJumping)
+	if (GetIsFalling() &&  !bFlying)
 	{
-		bRiding = true;
+		bFlying = true;
 		UCharacterMovementComponent* Movement = GetCharacterMovement();
 		Movement->GravityScale = 0.f;
 		Movement->Velocity = FVector::Zero();
 		ReduceMp(10.f);
+	} 
+
+}
+
+void ADokkaebi::StopFlying()
+{
+	if (bFlying)
+	{
+		bFlying = false;
+		FlyingRuntime = 0.f;
+		GetCharacterMovement()->GravityScale = 1.0f;
 	}
-	bJumping = true;
 }
 
 void ADokkaebi::NormalAttack()
